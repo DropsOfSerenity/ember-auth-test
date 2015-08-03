@@ -3,10 +3,10 @@ import { module, test } from 'qunit';
 import startApp from 'ember-auth/tests/helpers/start-app';
 import API from 'ember-auth/api';
 
-module('Acceptance | protected', {
+module('Acceptance | login', {
   beforeEach: function() {
-    API.token = null;
     this.application = startApp();
+    API.token = null;
   },
 
   afterEach: function() {
@@ -14,47 +14,37 @@ module('Acceptance | protected', {
   }
 });
 
-test('visiting /protected with valid token', function(assert) {
-  API.token = 'user';
-
+test('Login with incorrect credentials', function(assert) {
   visit('/');
-  click('a:contains(Protected Page)');
+  login('wrong', 'wrong');
 
   andThen(function() {
-    assert.equal(currentURL(), '/protected');
+    assert.equal(currentURL(), '/login');
+    assert.equal( find('#message').text(), 'Incorrect username/password' );
   });
 
-  click('a:contains(Go Back)');
+  click('button:contains(Cancel)');
 
   andThen(function() {
     assert.equal(currentURL(), '/');
   });
 });
 
-test('visiting /protected with invalid token', function(assert) {
-
-  visit('/');
-  click('a:contains(Protected Page)');
-
-  andThen(function() {
-    assert.equal(currentURL(), '/');
-    assert.equal(find('h4').text(), 'An error has occurred');
-    assert.equal(find('#content').text(), 'Please login to access this page');
-  });
-});
-
-test('logging in then visiting protected page', function(assert) {
+test('Login in as user', function(assert) {
   visit('/');
   login('user', 'secret');
 
   andThen(function() {
     assert.equal(currentURL(), '/');
   });
+});
 
-  click('a:contains(Protected Page)');
+test('Login as admin', function(assert) {
+  visit('/');
+  login('admin', 'secret');
 
   andThen(function() {
-    assert.equal(currentURL(), '/protected');
+    assert.equal(currentURL(), '/');
   });
 });
 

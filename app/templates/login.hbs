@@ -1,0 +1,20 @@
+<h4>Login</h4>
+
+{{#if message}}
+  <div id="message">{{message}}</div>
+{{/if}}
+
+<p>
+  <small>
+    To login as user, use <code>user</code> / <code>secret</code>; <br>
+    To login as admin, use <code>admin</code> / <code>secret</code>;
+  </small>
+</p>
+
+<p>Username: {{input value=username name="username" type="text"}}</p>
+<p>Password: {{input value=password name="password" type="password"}}</p>
+
+<p>
+  <button {{action "submit"}}>Submit</button>
+  <button {{action "cancel"}}>Cancel</button>
+</p>
