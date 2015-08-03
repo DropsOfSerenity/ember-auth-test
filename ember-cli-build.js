@@ -6,6 +6,10 @@ module.exports = function(defaults) {
     // Add options here
   });
 
+  app.import('bower_components/normalize-css/normalize.css');
+  app.import('bower_components/FakeXMLHttpRequest/fake_xml_http_request.js');
+  app.import('bower_components/route-recognizer/dist/route-recognizer.js');
+  app.import('bower_components/pretender/pretender.js');
   // Use `app.import` to add additional libraries to the generated
   // output files.
   //
