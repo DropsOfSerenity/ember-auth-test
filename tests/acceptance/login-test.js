@@ -36,6 +36,15 @@ test('Login in as user', function(assert) {
 
   andThen(function() {
     assert.equal(currentURL(), '/');
+    assert.equal( find('h4').text(), 'You are logged in as User' );
+    assert.equal( find('button:contains(Logout)').length, 1 );
+  });
+
+  click('button:contains(Logout)');
+
+  andThen(function() {
+    assert.equal(currentURL(), '/');
+    assert.equal( find('button:contains(Login)').length, 1 );
   });
 });
 
@@ -45,6 +54,15 @@ test('Login as admin', function(assert) {
 
   andThen(function() {
     assert.equal(currentURL(), '/');
+    assert.equal( find('h4').text(), 'You are logged in as Administrator' );
+    assert.equal( find('button:contains(Logout)').length, 1 );
+  });
+
+  click('button:contains(Logout)');
+
+  andThen(function() {
+    assert.equal(currentURL(), '/');
+    assert.equal( find('button:contains(Login)').length, 1 );
   });
 });
 

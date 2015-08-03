@@ -1,0 +1,6 @@
+html, body {
+  margin: 20px;
+}
+button.active {
+  display: none;
+}

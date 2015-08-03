@@ -37,9 +37,14 @@ test('visiting /protected with invalid token', function(assert) {
   click('a:contains(Protected Page)');
 
   andThen(function() {
-    assert.equal(currentURL(), '/');
-    assert.equal(find('h4').text(), 'An error has occurred');
-    assert.equal(find('#content').text(), 'Please login to access this page');
+    assert.equal(currentURL(), '/login');
+    assert.equal(find('#message').text(), 'Please login to access this page');
+  });
+
+  login('user', 'secret');
+
+  andThen(function() {
+    assert.equal(currentURL(), '/protected');
   });
 });
 

@@ -10,9 +10,15 @@ export default Ember.Route.extend({
       var username = controller.get('username'),
           password = controller.get('password');
 
+      var transition = controller.get('transition');
+
       API.login(username, password).then(
-        function() {
-          self.transitionTo('index');
+        function(user) {
+          self.session.set('user', user);
+          if (transition)
+            transition.retry();
+          else
+            self.transitionTo('index');
         },
         function(err) {
           controller.set('message', err.message);
@@ -23,5 +29,14 @@ export default Ember.Route.extend({
     cancel: function() {
       this.transitionTo('index');
     }
+  },
+
+  resetController: function(controller) {
+    controller.setProperties({
+      username: null,
+      password: null,
+      message: null,
+      transition: null
+    });
   }
 });
