@@ -15,7 +15,7 @@ module('Acceptance | protected', {
 });
 
 test('visiting /protected with valid token', function(assert) {
-  API.token = 'user';
+  login('user', 'secret');
 
   visit('/');
   click('a:contains(Protected Page)');
@@ -32,7 +32,6 @@ test('visiting /protected with valid token', function(assert) {
 });
 
 test('visiting /protected with invalid token', function(assert) {
-
   visit('/');
   click('a:contains(Protected Page)');
 
